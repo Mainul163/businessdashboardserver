@@ -11,7 +11,7 @@ const uri = "mongodb+srv://mainul:Eom6SWvUoUnIobzG@cluster0.usqzbcn.mongodb.net/
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const a = ['a', 'b']
-async function run() {
+const incomeDetails=async() =>{
     try {
         await client.connect();
 
@@ -37,7 +37,7 @@ async function run() {
         // await client.close();
     }
 }
-run().catch(console.dir);
+incomeDetails().catch(console.dir);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
