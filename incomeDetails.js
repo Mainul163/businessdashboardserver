@@ -11,12 +11,20 @@ const uri = "mongodb+srv://mainul:Eom6SWvUoUnIobzG@cluster0.usqzbcn.mongodb.net/
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const a = ['a', 'b']
-const incomeDetails=async() =>{
+const incomeDetailsFun=async() =>{
     try {
         await client.connect();
 
 
         const collData = client.db("incomeDetails").collection("incomeDetailsData");
+        
+        app.get("/incomedetails",async(req,res)=>{
+
+            const incomeData = collData.find();
+            const incomeAllDataList=await incomeData.toArray()
+            res.send(incomeAllDataList)
+        })
+
         app.post("/incomedetails", async (req, res) => {
             const incomeDetailsData = req.body
       
@@ -24,7 +32,7 @@ const incomeDetails=async() =>{
             upDateIncomeDetailsData.orderType=incomeDetailsData?.orderType
             upDateIncomeDetailsData.amount=parseInt(incomeDetailsData?.amount)
             upDateIncomeDetailsData.year=parseInt(incomeDetailsData?.year)
-            console.log(upDateIncomeDetailsData);
+            
             const data = await collData.insertOne(upDateIncomeDetailsData);
             res.send(data)
 
@@ -37,11 +45,11 @@ const incomeDetails=async() =>{
         // await client.close();
     }
 }
-incomeDetails().catch(console.dir);
+incomeDetailsFun().catch(console.dir);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
-module.exports = run;
+module.exports = a;
 
 
